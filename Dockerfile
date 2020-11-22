@@ -25,7 +25,7 @@ RUN java -jar aem-quickstart.jar -unpack && \
 
 #COPY dist/install.first/*.config ./crx-quickstart/install/
 COPY dist/install.first/conf/sling.properties ./crx-quickstart/conf/sling.properties
-COPY jar/license.properties ./
+#COPY jar/license.properties ./
 
 COPY packages/ $PACKAGE_PATH/
 
