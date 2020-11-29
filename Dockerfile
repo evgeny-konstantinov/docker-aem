@@ -4,16 +4,18 @@ ARG AEM_VERSION="6.5.0"
 ARG AEM_PORT="4502"
 ARG AEM_RUNMODES="-Dsling.run.modes=author,crx3,crx3tar,nosamplecontent"
 ARG WORK_DIR="/opt/aem"
+ARG AEM_STDOUT_LOG="${WORK_DIR}/crx-quickstart/logs/stdout.log"
 ARG AEM_JVM_OPTS="-server -Xms2048m -Xmx2048m -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true \
 -Dorg.apache.felix.http.host=0.0.0.0"
 ARG AEM_START_OPTS="start -c ${WORK_DIR}/crx-quickstart -i launchpad -p ${AEM_PORT} \
--Dsling.properties=${WORK_DIR}/crx-quickstart/conf/sling.properties -f logs/stdout.log"
+-a 0.0.0.0 -Dsling.properties=${WORK_DIR}/crx-quickstart/conf/sling.properties"
 ARG AEM_JARFILE="${WORK_DIR}/crx-quickstart/app/cq-quickstart-${AEM_VERSION}-standalone-quickstart.jar"
 
 ENV AEM_JVM_OPTS="${AEM_JVM_OPTS}" \
-    AEM_START_OPTS="${AEM_START_OPTS}"\
+    AEM_START_OPTS="${AEM_START_OPTS}" \
     AEM_JARFILE="${AEM_JARFILE}" \
-    AEM_RUNMODES="${AEM_RUNMODES}"
+    AEM_RUNMODES="${AEM_RUNMODES}" \
+    AEM_STDOUT_LOG="${AEM_STDOUT_LOG}"
 
 WORKDIR ${WORK_DIR}
 COPY scripts/*.sh ./
