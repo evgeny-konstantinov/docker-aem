@@ -18,12 +18,13 @@ ENV AEM_JVM_OPTS="${AEM_JVM_OPTS}" \
     AEM_STDOUT_LOG="${AEM_STDOUT_LOG}"
 
 WORKDIR ${WORK_DIR}
-COPY scripts/*.sh ./
 COPY jar/aem-quickstart.jar ./aem-quickstart.jar
 
 #unpack the jar
 RUN java -jar aem-quickstart.jar -unpack && \
     rm aem-quickstart.jar
+
+COPY scripts/*.sh ./crx-quickstart/bin
 
 #COPY dist/install.first/*.config ./crx-quickstart/install/
 COPY dist/install.first/conf/sling.properties ./crx-quickstart/conf/sling.properties
@@ -35,7 +36,7 @@ EXPOSE ${AEM_PORT} 58242 57345 57346
 VOLUME ["${WORK_DIR}/crx-quickstart/repository", "${WORK_DIR}/crx-quickstart/logs"]
 
 #ensure script has exec permissions
-RUN chmod +x ${WORK_DIR}/*.sh
+RUN chmod +x ${WORK_DIR}/crx-quickstart/bin/*.sh
 
 #make java pid 1
-ENTRYPOINT ["/tini", "-v", "--", "/opt/aem/run-tini.sh"]
+ENTRYPOINT ["/tini", "-v", "--", "/opt/aem/crx-quickstart/bin/run-tini.sh"]
