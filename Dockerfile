@@ -25,7 +25,8 @@ RUN java -jar aem-quickstart.jar -unpack && \
 
 COPY scripts/*.sh ./crx-quickstart/bin
 
-#COPY dist/install.first/*.config ./crx-quickstart/install/
+COPY dist/install.first/*.config ./crx-quickstart/install/
+COPY dist/install.first/logs/*.config ./crx-quickstart/install/
 COPY dist/install.first/conf/sling.properties ./crx-quickstart/conf/sling.properties
 COPY packages/ ./crx-quickstart/install
 
