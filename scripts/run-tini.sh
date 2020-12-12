@@ -6,7 +6,7 @@ if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
     java $AEM_JVM_OPTS $AEM_RUNMODES \
     -jar $AEM_JARFILE \
     $AEM_START_OPTS \
-    2>&1 | tee -a $AEM_STDOUT_LOG # redirect stdout and stderr to the file and to the terminal
+    >>$AEM_STDOUT_LOG 2>&1 # redirect stdout and stderr to the file
 
 fi
 
