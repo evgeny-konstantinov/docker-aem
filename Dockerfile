@@ -7,7 +7,14 @@ ARG WORK_DIR="/opt/aem"
 ARG AEM_STDOUT_LOG="${WORK_DIR}/crx-quickstart/logs/stdout.log"
 ARG AEM_JVM_OPTS="-server -Xmx2048m -Djava.awt.headless=true"
 ARG AEM_START_OPTS="start -c ${WORK_DIR}/crx-quickstart -i launchpad -p ${AEM_PORT} \
--Dsling.properties=${WORK_DIR}/crx-quickstart/conf/sling.properties"
+-Dsling.properties=${WORK_DIR}/crx-quickstart/conf/sling.properties \
+--add-opens=java.desktop/com.sun.imageio.plugins.jpeg=ALL-UNNAMED \
+--add-opens=java.base/sun.net.www.protocol.jrt=ALL-UNNAMED \
+--add-opens=java.naming/javax.naming.spi=ALL-UNNAMED \
+--add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED \
+--add-opens=java.base/java.lang=ALL-UNNAMED \
+--add-opens=java.base/jdk.internal.loader=ALL-UNNAMED \
+--add-opens=java.base/java.net=ALL-UNNAMED -Dnashorn.args=--no-deprecation-warning"
 ARG AEM_JARFILE="${WORK_DIR}/crx-quickstart/app/cq-quickstart-${AEM_VERSION}-standalone-quickstart.jar"
 
 ENV AEM_JVM_OPTS="${AEM_JVM_OPTS}" \
@@ -28,7 +35,6 @@ COPY scripts/*.sh ./crx-quickstart/bin
 COPY dist/install.first/*.config ./crx-quickstart/install/
 COPY dist/install.first/logs/*.config ./crx-quickstart/install/
 COPY dist/install.first/conf/sling.properties ./crx-quickstart/conf/sling.properties
-COPY packages/ ./crx-quickstart/install
 
 #expose port
 EXPOSE ${AEM_PORT} 58242 57345 57346
